@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline';">
+    <title>Matouš Petržela</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --white: #ffffff;
+            --black: #0f0f0f;
+            --grey: #6b7280;
+            --orange: #ff8a00;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            color: var(--black);
+            background: var(--white);
+        }
+
+        /* HEADER - čistý oranžový pás */
+        header {
+            background: var(--orange);
+            height: 29px;
+        }
+
+        /* MENU pod headerem */
+        nav {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--grey);
+            font-weight: 400;
+            font-size: 1.1rem;
+        }
+
+        /* HLAVNÍ PLOCHA - vertikální řez */
+        main {
+            flex: 1;
+            display: flex;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .vibes {
+            flex: 1;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 4rem;
+        }
+
+        .brutal {
+            flex: 1;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 4rem;
+        }
+
+        .jmeno-text {
+            position: absolute;
+            top: 42%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .hlavni {
+            font-size: 10.1rem;
+            font-weight: 900;
+            color: #0f0f0f;
+            line-height: 0.9;
+        }
+
+        .dominantni-text {
+            position: absolute;
+            top: 85%;
+            left: 5%;
+            transform: translateY(-50%);
+            text-align: left;
+        }
+
+        .radek1 {
+            font-size: 1.78rem;
+            font-weight: 400;
+            color: #4a5568;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .radek2 {
+            font-size: 1.955rem;
+            font-weight: 700;
+            color: #4a5568;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .radek3 {
+            font-size: 1.705rem;
+            font-weight: 400;
+            color: #4a5568;
+            line-height: 1.2;
+        }
+
+        /* SCROLL HINT */
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.85rem;
+            color: #9ca3af;
+            text-align: center;
+        }
+
+        /* SEKCE POD HERO */
+        .most-sekce {
+            display: none;
+        }
+
+        .most-veta {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #4a5568;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        /* ODDĚLOVAČ */
+        .oddelovac {
+            height: 2px;
+            background: var(--orange);
+            margin: 8rem 0;
+        }
+
+        /* VIBECODING SEKCE */
+        .vibecoding-sekce {
+            padding: 8rem 4rem;
+            background: var(--white);
+            margin-bottom: 4rem;
+        }
+
+        .vibecoding-nadpis {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .vibecoding-definice {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .definice-radek {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--black);
+            line-height: 3;
+            margin-bottom: 1.5rem;
+        }
+
+        /* PROJEKTY SEKCE */
+        .projekty-sekce {
+            padding: 8rem 4rem;
+            background: var(--white);
+            margin-bottom: 4rem;
+        }
+
+        .projekty-nadpis {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .projekt-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .projekt-item {
+            margin-bottom: 4rem;
+        }
+
+        .projekt-nazev {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .projekt-popis {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--grey);
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .projekt-poznatek {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--black);
+            line-height: 1.8;
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* O MNĚ SEKCE */
+        .omne-sekce {
+            padding: 8rem 4rem;
+            background: var(--white);
+            margin-bottom: 4rem;
+        }
+
+        .omne-nadpis {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .omne-text {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--black);
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* KONTAKT SEKCE */
+        .kontakt-sekce {
+            padding: 8rem 4rem;
+            background: var(--white);
+            margin-bottom: 4rem;
+        }
+
+        .kontakt-nadpis {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .kontakt-obsah {
+            text-align: center;
+        }
+
+        .kontakt-email {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--black);
+            margin-bottom: 1rem;
+        }
+
+        .kontakt-veta {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--grey);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--white);
+            padding: 2rem;
+        }
+
+        /* MOBILE - horizontální řez místo vertikálního */
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+            }
+
+            .vibes, .brutal {
+                padding: 3rem 2rem;
+            }
+
+            .hlavni {
+                font-size: 4.3rem;
+            }
+
+            .jmeno-text {
+                top: 35%;
+            }
+
+            .dominantni-text {
+                left: 3%;
+                top: 80%;
+            }
+
+            .radek1 {
+                font-size: 1.07rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .radek2 {
+                font-size: 1.17rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .radek3 {
+                font-size: 1rem;
+            }
+
+            .most-sekce, .vibecoding-sekce, .projekty-sekce, .omne-sekce, .kontakt-sekce {
+                padding: 4rem 2rem;
+            }
+
+            .definice-radek {
+                font-size: 1.1rem;
+            }
+
+            .projekt-nazev {
+                font-size: 1.2rem;
+            }
+
+            .omne-text {
+                font-size: 1rem;
+            }
+
+            nav {
+                padding: 1.5rem 0;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+            }
+
+            .scroll-hint {
+                display: none;
+            }
+
+            .most-veta {
+                bottom: 12%;
+                left: 50%;
+                font-size: 0.9rem;
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header></header>
+
+    <nav>
+        <ul>
+            <li><a href="#o-mne">O mně</a></li>
+            <li><a href="#projekty">Projekty</a></li>
+            <li><a href="#vibecoding">Vibecoding</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="vibes"></div>
+        <div class="brutal"></div>
+        <div class="jmeno-text">
+            <div class="hlavni">Matouš<br>Petržela</div>
+        </div>
+        <div class="dominantni-text">
+            <div class="radek1">Nejsem jen vibes.</div>
+            <div class="radek2">Nejsem jen brutal.</div>
+            <div class="radek3">Umím obojí držet pohromadě.</div>
+        </div>
+        <p class="most-veta">Učím se s AI nahlas. A beru ostatní s sebou.</p>
+        <div class="scroll-hint">↓</div>
+    </main>
+
+    <section class="most-sekce">
+        <p class="most-veta">Učím se s AI nahlas. A beru ostatní s sebou.</p>
+    </section>
+
+    <div class="oddelovac"></div>
+
+    <section id="vibecoding" class="vibecoding-sekce">
+        <h2 class="vibecoding-nadpis">Vibecoding</h2>
+        <div class="vibecoding-definice">
+            <p class="definice-radek">Začít dřív, než mám jasno.</p>
+            <p class="definice-radek">Myslet nahlas s AI.</p>
+            <p class="definice-radek">Učit se stavěním.</p>
+        </div>
+    </section>
+
+    <div class="oddelovac"></div>
+
+    <section id="projekty" class="projekty-sekce">
+        <h2 class="projekty-nadpis">Projekty</h2>
+        <div class="projekt-list">
+            <div class="projekt-item">
+                <h3 class="projekt-nazev">Knowledge Base pro Vibe Coding</h3>
+                <p class="projekt-popis">Centrální místo pro dokumentaci Claude Code, Anthropic Cookbook a české zdroje. 31 souborů, 272 KB čisté dokumentace.</p>
+                <p class="projekt-poznatek">Naučil jsem se organizovat informace tak, aby byly použitelné, ne jen archivované.</p>
+            </div>
+            <div class="projekt-item">
+                <h3 class="projekt-nazev">AI Asistent pro Analýzu Pojistek</h3>
+                <p class="projekt-popis">Specializovaný asistent v M365 Copilot pro práci s pojistnými podmínkami.</p>
+                <p class="projekt-poznatek">Zjistil jsem, že dobře nadefinovaný kontext je důležitější než složitý prompt.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="oddelovac"></div>
+
+    <section id="o-mne" class="omne-sekce">
+        <h2 class="omne-nadpis">O mně</h2>
+        <div class="omne-text">
+            <p>Baví mě učit ostatní, protože v tom procesu se nejvíc učím sám. Když něco sdílím, musím to pochopit líp. Když někomu pomůžu, vidím věci jinak.</p>
+            <p style="margin-top: 1.5rem;">Sdílím proces, ne jen výsledky. Zajímá mě cesta, ne póza. A zajímá mě komunita lidí, kteří to myslí stejně.</p>
+        </div>
+    </section>
+
+    <div class="oddelovac"></div>
+
+    <section id="kontakt" class="kontakt-sekce">
+        <h2 class="kontakt-nadpis">Kontakt</h2>
+        <div class="kontakt-obsah">
+            <p class="kontakt-email">matous@example.com</p>
+            <p class="kontakt-veta">Pokud ti tohle dává smysl, napiš.</p>
+        </div>
+    </section>
+
+    <footer></footer>
+
+</body>
+</html>
